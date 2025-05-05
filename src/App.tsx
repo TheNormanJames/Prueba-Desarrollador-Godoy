@@ -28,6 +28,8 @@ function App() {
         });
         setGifList(data.gifList);
         setCurrentGifIndex(0);
+
+        setDataToDatabase(data);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       } finally {
@@ -35,6 +37,26 @@ function App() {
       }
     })();
   }, []);
+  // function setDataToDataBase() {
+  //   localStorage.setItem(
+  //     'fetchDataCats',
+  //     JSON.stringify(fetchData)
+  //   );
+  // }
+  // setDataToDataBase();
+
+  function setDataToDatabase(fetchData: fetchDataProps) {
+    const previousDataJSON = localStorage.getItem('fetchDataCats');
+    const previousData = previousDataJSON ? JSON.parse(previousDataJSON) : [];
+
+    const newEntry = {
+      ...fetchData,
+      date: new Date().toISOString(),
+    };
+
+    const updatedData = [...previousData, newEntry];
+    localStorage.setItem('fetchDataCats', JSON.stringify(updatedData));
+  }
 
   return (
     <>

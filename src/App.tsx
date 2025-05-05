@@ -3,9 +3,12 @@ import Views from './views/Views';
 import MainNav from './components/MainNav';
 import Loading from './components/Loading';
 import { fetchDataProps } from './types/fetchDataProps';
+import { fetchAllData } from './utils/api';
 
 function App() {
   const [isTabActive, setIsTabActive] = useState<boolean>(false);
+  const [gifList, setGifList] = useState<string[]>([]);
+  const [currentGifIndex, setCurrentGifIndex] = useState<number>(0);
 
   const [fetchData, setFetchData] = useState<fetchDataProps>({
     completeTextAPI: '',
@@ -14,38 +17,23 @@ function App() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function getFirstThreeWords(text: string): string {
-    return text.split(/\s+/).slice(0, 3).join(' ');
-  }
-
   useEffect(() => {
-    async function fetchAllData() {
-      setIsLoading(true);
+    (async () => {
       try {
-        const data = await fetch('https://catfact.ninja/fact');
-        const json = await data.json();
-        const palabra = getFirstThreeWords(json.fact);
-
-        const dataGif = await fetch(
-          `https://api.giphy.com/v1/gifs/search?q=${palabra}&api_key=${
-            import.meta.env.VITE_API_KEY
-          }&limit=5`
-        );
-        const jsonGif = await dataGif.json();
-
+        const data = await fetchAllData();
         setFetchData({
-          completeTextAPI: json.fact,
-          threeWords: palabra,
-          gifURL: jsonGif.data[0]?.images?.original?.url ?? '',
+          completeTextAPI: data.completeTextAPI,
+          threeWords: data.threeWords,
+          gifURL: data.gifList[0],
         });
-      } catch (err) {
-        console.error('Error fetching data:', err);
+        setGifList(data.gifList);
+        setCurrentGifIndex(0);
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
       } finally {
         setIsLoading(false);
       }
-    }
-
-    fetchAllData();
+    })();
   }, []);
 
   return (
@@ -57,7 +45,15 @@ function App() {
         ) : isLoading ? (
           <Loading />
         ) : (
-          <Views fetchData={fetchData} />
+          <Views
+            fetchData={fetchData}
+            gifList={gifList}
+            setGifIndex={(i) => {
+              setCurrentGifIndex(i);
+              setFetchData({ ...fetchData, gifURL: gifList[i] });
+            }}
+            currentGifIndex={currentGifIndex}
+          />
         )}
       </main>
     </>

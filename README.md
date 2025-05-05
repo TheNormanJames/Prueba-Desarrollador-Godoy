@@ -1,54 +1,40 @@
-# React + TypeScript + Vite
+# 🐱 Cat Facts + GIF Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una pequeña aplicación en React + Vite que muestra datos curiosos sobre gatos obtenidos desde una API pública y los relaciona con GIFs obtenidos desde Giphy.
+Se almacena los datos gracias al localstorage así se puede visualizar una historial de las busquedas.
 
-Currently, two official plugins are available:
+## 🚀 Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🐈 Obtener una frase aleatoria sobre gatos desde `https://catfact.ninja/fact`.
+- ✂️ Extraer automáticamente las tres primeras palabras de la frase.
+- 🔍 Buscar y mostrar un GIF relacionado a esas palabras usando la API de Giphy.
+- 🔁 Recargar solo el GIF sin cambiar la frase.
+- 🧠 Guardar el historial de búsquedas en `localStorage`, incluyendo fecha y hora.
+- 📜 Visualizar el historial completo desde otra pestaña.
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Giphy API](https://developers.giphy.com/)
+- [Cat Fact API](https://catfact.ninja/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📂 Estructura del Proyecto
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+src/
+├── assets/
+│   ├── components/
+│   │   └── Loading.tsx
+│   │   └── MainNav.tsx
+│   ├── views/
+│   │   └── Views.tsx
+│   │   └── HistoryPage.tsx
+│   ├── utils/
+│   │   └── api.ts
+│   └── types/
+│       └── fetchDataProps.ts
+└── App.tsx
 ```

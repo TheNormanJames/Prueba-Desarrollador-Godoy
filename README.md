@@ -38,3 +38,13 @@ src/
 │       └── fetchDataProps.ts
 └── App.tsx
 ```
+
+## Como iniciar el proyecto?
+
+```terminal
+npm install
+```
+
+```terminal
+npm run dev
+```

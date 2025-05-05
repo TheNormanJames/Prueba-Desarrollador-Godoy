@@ -14,43 +14,38 @@ function App() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  async function getFirstThreeWords(text: string): Promise<string> {
-    return new Promise<string>((resolve) => {
-      resolve(text.split(/\s+/).slice(0, 3).join(' '));
-    });
+  function getFirstThreeWords(text: string): string {
+    return text.split(/\s+/).slice(0, 3).join(' ');
   }
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchAllData() {
       setIsLoading(true);
-      const data = await fetch('https://catfact.ninja/fact');
-      const json = await data.json();
-      const palabra = await getFirstThreeWords(json.fact);
-      setFetchData((prev) => ({
-        ...prev,
-        completeTextAPI: json.fact,
-        threeWords: palabra,
-      }));
-      await fetchGif(palabra);
+      try {
+        const data = await fetch('https://catfact.ninja/fact');
+        const json = await data.json();
+        const palabra = getFirstThreeWords(json.fact);
+
+        const dataGif = await fetch(
+          `https://api.giphy.com/v1/gifs/search?q=${palabra}&api_key=${
+            import.meta.env.VITE_API_KEY
+          }&limit=5`
+        );
+        const jsonGif = await dataGif.json();
+
+        setFetchData({
+          completeTextAPI: json.fact,
+          threeWords: palabra,
+          gifURL: jsonGif.data[0]?.images?.original?.url ?? '',
+        });
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    async function fetchGif(query: string) {
-      const dataGif = await fetch(
-        `https://api.giphy.com/v1/gifs/search?q=${query}&api_key=${
-          import.meta.env.VITE_API_KEY
-        }&limit=5`
-      );
-      const jsonGif = await dataGif.json();
-
-      setFetchData((prev) => ({
-        ...prev,
-        gifURL: jsonGif.data[0]?.images?.original?.url ?? '',
-      }));
-
-      setIsLoading(false);
-    }
-
-    fetchData();
+    fetchAllData();
   }, []);
 
   return (

@@ -12,7 +12,12 @@ export default function Views({ fetchData }: ViewsProps) {
     <div>
       <h1 className="text-2xl font-bold text-center">Get Data</h1>
       <div className="grid grid-cols-2 items-center justify-center gap-4 mt-4">
-        <img src={gifURL} alt="" />
+        {gifURL ? (
+          <img src={gifURL} alt="gif" />
+        ) : (
+          <p className="text-red-500">No se encontró ningún GIF</p>
+        )}
+
         <p className="text-center">Words: {completeTextAPI}</p>
       </div>
     </div>

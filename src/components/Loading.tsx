@@ -1,3 +1,3 @@
 export default function Loading() {
-  return <div>Loading</div>;
+  return <div className="animate-pulse text-lg text-gray-500">Loading...</div>;
 }

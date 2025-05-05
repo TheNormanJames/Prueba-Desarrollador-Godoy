@@ -4,6 +4,7 @@ import MainNav from './components/MainNav';
 import Loading from './components/Loading';
 import { fetchDataProps } from './types/fetchDataProps';
 import { fetchAllData } from './utils/api';
+import HistoryPage from './views/historyPage';
 
 function App() {
   const [isTabActive, setIsTabActive] = useState<boolean>(false);
@@ -63,7 +64,7 @@ function App() {
       <MainNav isTabActive={isTabActive} setIsTabActive={setIsTabActive} />
       <main className="container mx-auto flex flex-col items-center justify-center mt-10">
         {isTabActive ? (
-          'asdf'
+          <HistoryPage />
         ) : isLoading ? (
           <Loading />
         ) : (

@@ -5,7 +5,7 @@ type MainNavProps = {
 
 export default function MainNav({ isTabActive, setIsTabActive }: MainNavProps) {
   return (
-    <nav className="w-full bg-gray-800 text-white p-4 flex space-x-4 justify-center">
+    <nav className="w-full bg-gray-800 text-white p-4 flex space-x-4 justify-center sticky top-0 z-10">
       {[false, true].map((value, index) => (
         <button
           key={index}

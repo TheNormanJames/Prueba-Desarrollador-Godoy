@@ -22,9 +22,9 @@ export default function Views({
   return (
     <div>
       <h1 className="text-2xl font-bold text-center">Get Data</h1>
-      <div className="grid grid-cols-2 items-center justify-center gap-4 mt-8">
+      <div className="p-4 grid grid-cols-1 items-center justify-center gap-4 mt-8 md:grid-cols-2">
         {gifURL ? (
-          <div className="flex justify-center items-center rounded-2xl overflow-hidden shadow-lg">
+          <div className=" flex justify-center items-center rounded-2xl overflow-hidden shadow-lg">
             <img
               src={gifURL}
               alt="gif"
